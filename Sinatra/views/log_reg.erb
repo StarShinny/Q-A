@@ -1,0 +1,49 @@
+<body style="background-image: url(img/index.jpg); background-repeat: no-repeat; background-size: 1400px">
+<div class="container">
+  <div style="text-align: center;margin-top: 200px">
+      <label><img src="img/qa.png" ></label>
+      <input id="userName" type="text" class="form-control" placeholder="请输入用户名" autofocus style="width: 200px;height: 30px"><br>
+
+      <input id="password" type="password" class="form-control" placeholder="请输入密码" style="width: 200px;height: 30px"><br>
+
+      <button id="login_btn" class="btn btn-lg btn-primary" style="margin-left: 10px;height: 35px" type="button">登陆</button>
+      <a id="modal-531863" href="#modal-container-531863" role="button" class="btn" data-toggle="modal" style="margin-left: 30px;height: 25px;">注册</a><p>
+      <label id="reminder" class="alert alert-warning" style="display: none; color: red; margin-top: 20px">无效的用户名或密码</label>
+  </div>
+
+  <div id="modal-container-531863" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="text-align: center;">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">
+        注册
+      </h3>
+    </div>
+    <div class="modal-body">
+      <form method="post" action="/action.do" class="form-signin">
+        <input type="hidden" name="action" value="register">
+        <input type="text" class="form-control" placeholder="请输入用户名" min="5" maxlength="30" id="regUserName" name="regUserName" autofocus><br>
+        <input type="email" class="form-control" placeholder="请输入邮箱" maxlength="50" name="regMail"><br>
+        <input type="password" class="form-control" placeholder="请输入密码" maxlength="30" id="pwd" name="regPassword"><br>
+        <input type="password" class="form-control" placeholder="请确认密码" maxlength="30" id="pwd_confirm"><br>
+        <button id="register" class="btn btn-lg btn-primary" style="margin-left: 30px;" type="submit">注册</button>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/vendor/jquery.ui.widget.js"></script>
+<script src="js/jquery.iframe-transport.js"></script>
+<script src="js/jquery.fileupload.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="http://files.cnblogs.com/rubylouvre/bootstrap-transition.js"></script>
+<script src="http://files.cnblogs.com/rubylouvre/bootstrap-dropdown.js"></script>
+<script src="js/custom.js"></script>
+
+<script>
+    $(function(){
+        $('.dropdown-toggle').dropdown()
+    })
+    window.onload = window.log_reg;
+</script>

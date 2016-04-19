@@ -1,0 +1,161 @@
+<body>
+<div class="container">
+  <!--navigation rows-->
+  <!--row 1 -->
+  <div class="row">
+    <div class="span12">
+      <h3 class="text-center">QNA</h3>
+    </div>
+  </div>
+
+  <!--row 2-->
+  <div class="row">
+    <div class="span12">
+      <div class="row">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="q_list"><%= '首页' %></a></li>
+          <li><a href="ask_q"><%= '我要提问' %></a></li>
+          <li style="height: 40px; " class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= '你好,'%><%= @_[:name][0,20] %></a><br>
+            <ul class="dropdown-menu">
+              <li><a href="/personal"><%= '我的主页' %></a></li>
+              <li><a href="/action.do?action=logout"><%= '退出' %></a></li>
+              <li class="divider"></li>
+              <li><a href="#"><%= '关于QNA' %></a></li>
+            </ul>
+          </li>
+          <li class="pull-right">
+            <form class="form-search" style="margin-bottom: 0px;">
+              <input id="keyValue" class="search-query" id="search" type="text" size="50">
+              <div class="btn-group">
+                <button id="search_q_btn" type="button" class="btn"><%= '搜索问题' %></button>
+                <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+                <ul class="dropdown-menu" contenteditable="false">
+                  <li><a id="search_u_btn"><%= '搜索用户' %></a></li>
+                </ul>
+              </div>
+            </form>
+          </li>
+
+
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+<!--detail question rows-->
+<div class="row">
+  <div class="span8">
+    <input id="qid" type="hidden" name="qid" value="<%= @_[:q_id] %>">
+    <h2><%=out @_[:d_title] %></h2>
+    <p><pre><%=out @_[:d_content] %></pre></p>
+    <button class="btn btn-small btn-warning" type="button" id="like_q_btn"><%= '赞一个' %></button>
+    <span>
+      <%= '有' %><span id="like_q_nums"><%= @_[:d_likes]%></span><%= '人赞过' %>
+    </span>
+
+
+    <div style="text-align: right"><strong><%= '问题分值：' %><%= @_[:d_point] %></strong></div>
+  </div>
+  <div class="span4" style="text-align: center">
+    <span><h4><%= '标签' %></h4></span>
+        <!--添加标签-->
+    <% for tag in @_[:d_tags] %>
+        <span class="button glow button-rounded button-flat-primary" style="width:50px;height:40px;font-size:20px;margin-top:5px;text-align: center"><%=out tag.content %></span><br class="badge-info" />
+    <% end %>
+  </div>
+</div>
+
+  <!--answer sheet-->
+  <% adopted = false %>    <!--没有回答被采纳-->
+      <% for d_answer in @_[:d_answers] %>
+          <% if d_answer[:answer].adopted == 'true' %>
+              <% adopted_aid = d_answer[:answer].aid %>
+              <% adopted = true %>
+          <% end %>
+  <% end %>
+
+  <% for d_answer in @_[:d_answers] %>
+      <div class="row">
+        <hr>
+        <div class="span2">
+          <img alt="140x140" src="img/user<%="#{d_answer[:user_id]}"%>.jpg" class="img-polaroid" />
+          <p style="text-align: center"><strong><%=out d_answer[:user_name] %></strong></p>
+
+            <% if @_[:ask_uid]==@_[:user_id] %>  <!--是该用户提出的问题-->
+              <% if adopted %>        <!--已有回答被采纳-->
+                  <% if d_answer[:answer].aid == adopted_aid %>
+                      <button id="<%= "#{d_answer[:answer].aid}" %>" disabled="disabled" class="adopt_btn btn btn-success" type="button" style="margin-left: 35px;">已采纳</button>
+                  <% end %>
+              <% else %>
+                  <button id="<%= "#{d_answer[:answer].aid}" %>" class="adopt_btn btn btn-success" type="button" style="margin-left: 35px;">采纳</button>
+              <% end %>
+            <% end %>
+        </div>
+        <div class="span10">
+          <blockquote>
+            <%=out d_answer[:answer].content %>
+          </blockquote>
+
+          <button id="<%= "#{d_answer[:answer].aid}" %>" class="like_ans_btn btn btn-small btn-warning" type="button">赞一个</button>
+          <span>有<span id="<%= "#{d_answer[:answer].aid}" %>" class="like_ans_num" ><%= d_answer[:answer].likes %></span>人赞过</span>
+        </div>
+      </div>
+<% end %>
+
+  <!--comment sheet-->
+  <div class="row">
+    <hr>
+
+    <div class="span2">
+      <img alt="140x140" src="img/user<%="#{@_[:user_id]}"%>.jpg" class="img-polaroid" /> <address><strong> <%= @_[:name] %> </strong></address>
+    </div>
+
+    <div class="span9 editor_frame" id="post_ans" method="post" action="/action.do">
+      <input type="hidden" name="action" value="post_ans">
+
+      <div class="row">
+        <div id="ans_q_editor" class="hero-unit editor" contenteditable="true"></div>
+      </div>
+      <div class="row">
+        <div id="ans_q_editor_bar" class="btn-group editor_btnbar">
+            <button id="ans_ins_pic_btn" class="button glow button-rounded button-flat-action" style="color: #fff;" type="button">
+              添加图片
+            </button>
+            <button id="pst_answer_btn" class="button glow button-rounded button-flat-action"  type="button" style="margin-left: 10px;">
+              发布
+            </button>
+          <input style="display: none; " id="ans_fileupload" type="file" accept="image/png,image/jpeg,imge/gif" name="files[]" data-url="/index" multiple>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+                              <!--<form method="POST" action="<url>">-->
+                                <!--<input type="text" name="myname" value="zhaoxiaoyan">-->
+                                                 <!--<button type="submit">tijiao</button>-->
+                              <!--</form>-->
+</div>
+</body>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/vendor/jquery.ui.widget.js"></script>
+<script src="js/jquery.iframe-transport.js"></script>
+<script src="js/jquery.fileupload.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="http://files.cnblogs.com/rubylouvre/bootstrap-transition.js"></script>
+<script src="http://files.cnblogs.com/rubylouvre/bootstrap-dropdown.js"></script>
+<script src="js/editor.js"></script>
+<script type="text/javascript"></script>
+<script src="js/custom.js"></script>
+<script>
+    window.onload = detail_q;
+</script>
+
+<script>
+    $(function(){
+        $('.dropdown-toggle').dropdown()
+    })
+
+</script>

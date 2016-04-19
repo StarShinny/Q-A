@@ -1,0 +1,102 @@
+﻿<body>
+<div class="container">
+  <!--navigation rows-->
+  <!--row 1 -->
+  <div class="row">
+    <div class="span12">
+      <h3 class="text-center">QNA</h3>
+    </div>
+  </div>
+
+  <!--row 2-->
+  <div class="row">
+    <div class="span12">
+      <div class="row">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="q_list"><%= '首页' %></a></li>
+          <li><a href="ask_q"><%= '我要提问' %></a></li>
+          <li style="height: 40px; " class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= '你好，'+@_[:name][0,20] %></a><br>
+            <ul class="dropdown-menu">
+              <li><a href="/personal"><%= '我的主页' %></a></li>
+              <li><a href="/action.do?action=logout"><%= '退出' %></a></li>
+              <li class="divider"></li>
+              <li><a href="#"><%= '关于QNA' %></a></li>
+            </ul>
+          </li>
+          <li class="pull-right">
+            <form class="form-search" style="margin-bottom: 0px;">
+              <input id="keyValue" class="search-query" id="search" type="text" size="50">
+              <div class="btn-group">
+                <button id="search_q_btn" type="button" class="btn"><%= '搜索问题' %></button>
+                <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+                <ul class="dropdown-menu" contenteditable="false">
+                  <li><a id="search_u_btn"><%= '搜索用户' %></a></li>
+                </ul>
+              </div>
+            </form>
+          </li>
+
+
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <!--qlist rows-->
+  <div class="row">
+    <div class="span2">
+      <ul class="nav nav-list">
+        <li id="latest_li" class="active"><a id="latest_" href="#"><%=out '每周最新' %></a></li>
+        <li id="hotest_li"><a id="hotest_" href="#"><%=out '每周最热' %></a></li>
+      </ul>
+    </div>
+
+    <div id="latest_div" style="display: inline;">
+      <div class="span10">
+            <% for l_q in @_[:latest_q] %>
+                <div  class="alert alert-info editor ">
+                    <h3><a href="detail_q?qid=<%=l_q.qid%>"><%=out l_q.title %></a></h3>
+                    <p><%=out l_q.content %></p>
+                </div>
+            <% end %>
+      </div>
+    </div>
+
+    <div id="hotest_div" style="display: none;">
+      <div class="span10">
+            <% for h_q in @_[:hottest_q] %>
+                <div class="alert alert-info editor">
+                  <h3><a href="detail_q?qid=<%=h_q.qid%>"><%=out h_q.title %></a></h3>
+                  <p><%=out h_q.content %></p>
+                </div>
+            <% end %>
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>
+</body>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/vendor/jquery.ui.widget.js"></script>
+<script src="js/jquery.iframe-transport.js"></script>
+<script src="js/jquery.fileupload.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="http://files.cnblogs.com/rubylouvre/bootstrap-transition.js"></script>
+<script src="http://files.cnblogs.com/rubylouvre/bootstrap-dropdown.js"></script>
+<script src="js/editor.js"></script>
+<script src="js/custom.js"></script>
+<script>
+    $(function(){
+        $('.dropdown-toggle').dropdown()
+    })
+
+    window.onload = q_list;
+
+</script>

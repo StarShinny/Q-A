@@ -1,0 +1,24 @@
+<body>
+    <button id="mybtn">some</button>
+
+</body>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/vendor/jquery.ui.widget.js"></script>
+<script src="js/jquery.iframe-transport.js"></script>
+<script src="js/jquery.fileupload.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="http://files.cnblogs.com/rubylouvre/bootstrap-transition.js"></script>
+<script src="http://files.cnblogs.com/rubylouvre/bootstrap-dropdown.js"></script>
+
+<script type="text/javascript">
+    window.onload = function(){
+        document.getElementById('mybtn').onclick = function(){
+            $.post('/s', {name: 'tony', age: '22'}, function(data, status){
+                console.log(data);
+            });
+
+
+                             //http://localhost：4567/index?param1=value1&param2=value2
+        };
+    };
+</script>

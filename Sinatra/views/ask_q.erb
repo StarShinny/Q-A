@@ -1,0 +1,146 @@
+<body>
+<div class="container">
+  <!--navigation rows-->
+  <!--row 1 -->
+  <div class="row">
+    <div class="span12">
+      <h3 class="text-center">QNA</h3>
+    </div>
+  </div>
+
+  <!--row 2-->
+  <div class="row">
+    <div class="span12">
+      <div class="row">
+        <ul class="nav nav-tabs">
+          <li><a href="q_list"><%= '首页' %></a></li>
+          <li class="active"><a href="ask_q"><%= '我要提问' %></a></li>
+          <li style="height: 40px; " class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= '你好，'+@_[:name][0,20] %></a><br>
+            <ul class="dropdown-menu">
+              <li><a href="/personal"><%= '我的主页' %></a></li>
+              <li><a href="/action.do?action=logout"><%= '退出' %></a></li>
+              <li class="divider"></li>
+              <li><a href="#"><%= '关于QNA' %></a></li>
+            </ul>
+          </li>
+          <li class="pull-right">
+            <form class="form-search" style="margin-bottom: 0px;">
+              <input id="keyValue" class="search-query" id="search" type="text" size="50">
+              <div class="btn-group">
+                <button id="search_q_btn" type="button" class="btn"><%= '搜索问题' %></button>
+                <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+                <ul class="dropdown-menu" contenteditable="false">
+                  <li><a id="search_u_btn"><%= '搜索用户' %></a></li>
+                </ul>
+              </div>
+            </form>
+          </li>
+
+
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!--ask_qustion rows-->
+  <!--row 1-->
+  <div class="row">
+    <div class="span12">
+      <div>
+        <% if @_[:able] %>
+            <h4><%= '请概括您的问题' %></h4>
+        <% else %>
+            <h4><%= '请概括您的问题' %></h4>
+            <h4 style="color: red"><%= '对不起，您已达今天最大提问数，不能继续提问' %></h4>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span12 editor_frame" id="q_title">
+      <div class="row">
+        <div id="q_title" class="hero-unit editor" contenteditable="true"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span12" id="q_content">
+      <div>
+        <h4><%= '请补充您的问题' %></h4>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="span12 editor_frame">
+      <div class="row">
+        <div id="ask_q_editor" class="hero-unit editor" contenteditable="true">
+        </div>
+      </div>
+      <div class="row">
+        <div id="ask_q_editor_bar" class="btn-group editor_btnbar">
+            <button id="ask_q_ins_pic_btn"  <%= 'disabled="disabled"' unless @_[:able]%> class="button glow button-rounded button-flat-action" style="color: #fff;" type="button">
+              添加图片
+            </button>
+
+              <button id="ask_q_pst_answer_btn" <%= 'disabled="disabled"' unless @_[:able]%> class="button glow button-rounded button-flat-action"  type="button" style="margin-left: 10px;">
+                发布
+              </button>
+
+          <input style="display: none; " id="ask_q_fileupload" type="file" accept="image/png,image/jpeg,image/gif" name="files[]" data-url="/index" multiple>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span4" id="tag_selection" style="text-align: center">
+      <span><h4><%= '标签' %></h4></span>
+      <% for tag in @_[:tags] %>
+          <div style='text-decoration: none;margin-left: 5px;margin-bottom: 5px;' onclick="javascript: move_tag(this,'tags_added')" class="button glow button-rounded button-flat-primary"><label><%=out tag.content %></label><label style="display: none"><%=tag.tid %></label></div>
+      <% end %>
+    </div>
+
+    <div class="span4" style="text-align: center">
+      <span><h4>你所选择的标签</h4></span>
+      <div id="tags_added" contenteditable="false"></div>
+    </div>
+
+    <div class="span4">
+      <span><h4>请设置本问题的答题积分奖励</h4></span>
+      <input type="number" class="form-control" id="points" placeholder="0积分" min="0" value="0" style="width:200px; height:30px">
+    </div>
+
+
+
+  </div>
+
+
+</div>
+</body>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/vendor/jquery.ui.widget.js"></script>
+<script src="js/jquery.iframe-transport.js"></script>
+<script src="js/jquery.fileupload.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="http://files.cnblogs.com/rubylouvre/bootstrap-transition.js"></script>
+<script src="http://files.cnblogs.com/rubylouvre/bootstrap-dropdown.js"></script>
+<script src="js/editor.js"></script>
+<script src="js/custom.js"></script>
+
+<script type="text/javascript">
+    window.onload = ask_q;
+</script>
+
+<script>
+    $(function(){
+        $('.dropdown-toggle').dropdown()
+    })
+
+</script>

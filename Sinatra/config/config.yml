@@ -1,0 +1,14 @@
+db_config:
+    adapter: mysql
+    user: 
+    encoding: utf8
+    password: 
+    database: 
+    host: localhost
+    log: 1
+    pool: 30
+    timeout: 5000
+meta:
+    DEBUG: 1
+    DAO_DIR: ./dao/
+    DAO_POSTFIX: .rb
